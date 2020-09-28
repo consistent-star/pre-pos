@@ -2,31 +2,32 @@
 
 function countSameElements(collection) {
 // 在此写代码
-let counters = [];
-for (let element of collection) {
-  let [key, count] = element.split('-');
-  let existedCounter = findObj(key, counters);
-  count = getCount(count);
-  if (existedCounter) {
-    existedCounter.count += count;
-  } else {
-    counters.push({key: key, count: count});
-  }
+var array = new Array();
+var k=0;
+var count=0;
+for(var i=0;i<collection.length;i++){
+    if(collection[i].length==1){
+        if(collection[i]==collection[i+1]){
+                count++;
+        }
+        else{
+            array[k]={
+                key:collection[i-1],
+                count:count+1
+            }
+            k++;
+            count=0;
+        }
+    }
+    else{
+        var [a,x,n]=collection[i];
+        array[k]={
+            key:a,
+            count: Number(n)
+        }
+        k++;
+        count=0;
+    }
 }
-return counters;
-}
-
-function findObj(key, counters) {
-for (let counter of counters) {
-  if (counter.key === key) {
-    return counter;
-  }
-}
-}
-
-function getCount(count) {
-if (count) {
-  return parseInt(count);
-}
-return 1;
+return array;
 }

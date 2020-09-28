@@ -2,41 +2,39 @@
 
 function createUpdatedCollection(collectionA, objectB) {
  // 在此写代码
- var collection_c = [];
-  var count = 1;
-  var result = [];
-
-  for(var i = 0; i < collectionA.length; i++){
-    var existLine = collectionA[i].split("-");
-
-    if(existLine[1]){
-      collection_c.push({key:existLine[0],count:parseInt(existLine[1])});
-    }else{
-      if(collectionA[i] === collectionA[i+1]){
-        ++count;
-      }else{
-        collection_c.push({key:collection_a[i],count:count});
-        count = 1;
-      }
-    }
-  }
-
-  collection_c.forEach(//element 数组中的每个元素
-    function compare(element){
-      for(var i = 0; i < object_b.value.length; i++){
-        if(element.key === object_b.value[i]){
-          if(element.count >= 3){
-            result.push({key:element.key,count:element.count-parseInt(element.count/3)});
-          }
-
-          d = false;
+ var array =[];
+ var k=0;
+ var count=0;
+ for(var i=0;i<collectionA.length;i++){
+     if(collectionA[i].length==1){
+         if(collectionA[i]==collectionA[i+1]){
+                 count++;
+         }
+         else{
+             array[k]={
+                 key:collectionA[i-1],
+                 count:count+1
+             }
+             k++;
+             count=0;
+         }
+     }
+     else{
+         var [a,x,n]=collectionA[i];
+         array[k]={
+             key:a,
+             count: Number(n)
+         }
+         k++;
+         count=0;
+     }
+ }
+ for(let i=0;i<objectB.value.length;i++){
+    for(let k=0;k<array.length;k++){
+        if(objectB.value[i]==array[k].key){
+            array[k].count=array[k].count-parseInt(array[k].count/3);
         }
-      }
-      if(d){
-        result.push({key:element.key,count:element.count});
-      }
-      d = true;
-    });
-
-  return result;
+    }
+}
+ return array;
 }
